@@ -63,3 +63,4 @@ desktop.ini
 # === Otros archivos comunes ===
 !/.mvn/wrapper/maven-wrapper.jar # Asegúrate de no ignorar el Maven Wrapper JAR
 *.~*                    # Archivos de respaldo
+/historial.txt

@@ -94,6 +94,7 @@ public final class Historial {
             }
         } catch (IOException e) {
             out.printf("Error: %s%n", e.getMessage());
+            guardarHistorial();
         }
     }
 }
