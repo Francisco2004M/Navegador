@@ -1,28 +1,29 @@
 package edu.uagrm.fich.navegador;
 
+import edu.uagrm.fich.navegador.gui.VentanaPrincipal;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.util.Objects;
+
 
 public class App extends Application {
 
-    private Stage stage;
+    public static final Image ICON = new Image(
+            Objects.requireNonNull(App.class.getResourceAsStream("/images/icon.png"))
+    );
+
     @Override
     public void start(Stage stage) {
-        this.stage = stage;
-        Label label = new Label("Hola Mundo");
-        Scene scene = new Scene(new StackPane(label), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
+        stage.setTitle("Navegador Web - UAGRM-FICH");
+        stage.setScene(new VentanaPrincipal());
+        stage.getIcons().add(ICON);
+        stage.setMaximized(true);
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         launch();
     }
 }
