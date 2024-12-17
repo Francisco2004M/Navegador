@@ -2,6 +2,7 @@ package edu.uagrm.fich.navegador.gui;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import edu.uagrm.fich.navegador.App;
 import edu.uagrm.fich.navegador.utils.Historial;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class VentanaHistorial extends Scene {
 
@@ -46,5 +48,14 @@ public class VentanaHistorial extends Scene {
     }
 
     private void eliminarHistorial() {
+        Alert alertConfirmacion = new Alert(null, "Seguro que desea eliminar todo el historial ?", ButtonType.YES, ButtonType.CANCEL);
+        alertConfirmacion.setTitle("Confirmación");
+        Stage stage = (Stage) alertConfirmacion.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(App.ICON);
+        alertConfirmacion.showAndWait();
+
+        if (alertConfirmacion.getResult() == ButtonType.YES) {
+            historial.limpiarHistorial();
+        }
     }
 }
