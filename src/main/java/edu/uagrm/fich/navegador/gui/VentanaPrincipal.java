@@ -2,6 +2,7 @@ package edu.uagrm.fich.navegador.gui;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import edu.uagrm.fich.navegador.utils.Historial;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,7 +30,8 @@ public class VentanaPrincipal extends Scene {
     private final HBox panelBuscar = new HBox(ESPACIADO, txtBuscador, btnBuscar, btnAtras, btnAdelante, btnHistorial);
     private final WebView contenedorWeb = new WebView();
 
-    WebEngine manejadorWeb = contenedorWeb.getEngine();
+    private WebEngine manejadorWeb = contenedorWeb.getEngine();
+    private Historial historial = new Historial();
 
     public VentanaPrincipal() {
         super(new VBox(ESPACIADO));
@@ -70,6 +72,7 @@ public class VentanaPrincipal extends Scene {
 
         HBox.setHgrow(txtBuscador, Priority.ALWAYS);
         VBox.setVgrow(contenedorWeb, Priority.ALWAYS);
+        refrescarBotonesDeNavegacion();
     }
 
     private void configurarAcciones(){
@@ -100,19 +103,28 @@ public class VentanaPrincipal extends Scene {
     }
 
     public void actualizarHistorial(String pagina) {
+        historial.agregarBusqueda(pagina);
         txtBuscador.setText(pagina);
         refrescarBotonesDeNavegacion();
     }
 
     private void refrescarBotonesDeNavegacion() {
-        // Pendiente por Implementar
+        btnAdelante.setDisable(!historial.hayAdelante());
+        btnAtras.setDisable(!historial.hayAtras());
+        historial.guardarHistorial();
     }
 
     private void clickEnAdelante() {
-        // Pendiente por Implementar
+        String urlAdelante = historial.adelante();
+        manejadorWeb.load(urlAdelante);
+        txtBuscador.setText(urlAdelante);
+        refrescarBotonesDeNavegacion();
     }
 
     private void clickEnAtras() {
-        // Pendiente por Implementar
+        String urlAtras = historial.atras();
+        manejadorWeb.load(urlAtras);
+        txtBuscador.setText(urlAtras);
+        refrescarBotonesDeNavegacion();
     }
 }
