@@ -37,7 +37,7 @@ public class VentanaPrincipal extends Scene {
     private final WebEngine manejadorWeb = contenedorWeb.getEngine();
     private final Historial historial = new Historial();
 
-    public VentanaPrincipal(Stage stage) {
+    public VentanaPrincipal(@SuppressWarnings("exports") Stage stage) {
         super(new VBox(ESPACIADO));
         this.stage = stage;
         this.panel = (VBox) getRoot();
@@ -81,14 +81,14 @@ public class VentanaPrincipal extends Scene {
     }
 
     private void configurarAcciones(){
-        btnBuscar.setOnAction( _ -> buscar(txtBuscador.getText()));
+        btnBuscar.setOnAction( _ -> buscar());
         btnAtras.setOnAction( _ -> clickEnAtras());
         btnAdelante.setOnAction( _ -> clickEnAdelante());
         btnHistorial.setOnAction( _ -> clickVerHistorial());
 
         txtBuscador.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
-                buscar(txtBuscador.getText());
+                buscar();
             }
         });
 
@@ -103,6 +103,10 @@ public class VentanaPrincipal extends Scene {
         Stage stageHistorial = new Stage();
         stageHistorial.initOwner(stage);
         VentanaHistorial ventanaHistorial = new VentanaHistorial(historial);
+        ventanaHistorial.setClickEnHistorial( historia -> {
+            actualizarHistorial(historia);
+            return null;
+        });
         stageHistorial.initModality(Modality.APPLICATION_MODAL);
         stageHistorial.setTitle("Historial de Navegación");
         stageHistorial.getIcons().add(App.ICON);
@@ -110,7 +114,8 @@ public class VentanaPrincipal extends Scene {
         stageHistorial.showAndWait();
     }
 
-    private void buscar(String consulta) {
+    private void buscar() {
+        String consulta = txtBuscador.getText();
         if (consulta.toLowerCase().contains("http") || consulta.toLowerCase().contains("ftp")) {
             manejadorWeb.load(consulta);
         } else {
@@ -122,6 +127,7 @@ public class VentanaPrincipal extends Scene {
     public void actualizarHistorial(String pagina) {
         historial.agregarBusqueda(pagina);
         txtBuscador.setText(pagina);
+        manejadorWeb.load(pagina);
         refrescarBotonesDeNavegacion();
     }
 

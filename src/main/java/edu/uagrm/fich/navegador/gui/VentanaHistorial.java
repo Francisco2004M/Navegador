@@ -8,9 +8,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class VentanaHistorial extends Scene {
 
@@ -21,6 +23,7 @@ public class VentanaHistorial extends Scene {
     private final Button btnBorrarHistorial = new Button("Limpiar Historial");
 
     private final Historial historial;
+    private Callback<String, ?> clickEnHistorial;
 
     public VentanaHistorial(Historial historial) {
         super(new VBox(ESPACIADO), 640, 480);
@@ -41,10 +44,19 @@ public class VentanaHistorial extends Scene {
         btnBorrarHistorial.setGraphic(limpiarHistorialIcon);
         btnBorrarHistorial.setTooltip(new Tooltip("Elimina todo el Historial"));
         listaHistorial.setItems(historial.obtenerHistorialCompleto());
+
+        btnBorrarHistorial.setStyle("-fx-cursor: hand;");
     }
 
     private void configurarAcciones() {
         btnBorrarHistorial.setOnAction( _ -> eliminarHistorial());
+        listaHistorial.setOnMouseClicked(this::clickEnHistorial);
+    }
+
+    private void clickEnHistorial(MouseEvent evt) {
+        if(evt.getClickCount() > 1){
+            clickEnHistorial.call(listaHistorial.getSelectionModel().getSelectedItem());
+        }
     }
 
     private void eliminarHistorial() {
@@ -57,5 +69,9 @@ public class VentanaHistorial extends Scene {
         if (alertConfirmacion.getResult() == ButtonType.YES) {
             historial.limpiarHistorial();
         }
+    }
+
+    public void setClickEnHistorial(Callback<String, ?> clickEnHistorial){
+        this.clickEnHistorial = clickEnHistorial;
     }
 }

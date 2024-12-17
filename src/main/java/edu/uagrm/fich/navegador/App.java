@@ -10,10 +10,11 @@ import java.util.Objects;
 
 public class App extends Application {
 
+    @SuppressWarnings("exports")
     public static final Image ICON = new Image(Objects.requireNonNull(App.class.getResourceAsStream("/images/icon.png")));
 
     @Override
-    public void start(Stage stage) {
+    public void start(@SuppressWarnings("exports") Stage stage) {
         stage.setTitle("Navegador Web - UAGRM-FICH");
         stage.setScene(new VentanaPrincipal(stage));
         stage.getIcons().add(ICON);
