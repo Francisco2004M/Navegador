@@ -17,6 +17,14 @@ public class Pila implements Serializable {
         cima = -1;
     }
 
+    public boolean vacia() {
+        return (cima == -1);
+    }
+
+    public boolean llena() {
+        return (cima == MAX);
+    }
+
     public void push(String x) {
         if (llena()) {
             throw new ArrayStoreException("Error: Pila llena");
