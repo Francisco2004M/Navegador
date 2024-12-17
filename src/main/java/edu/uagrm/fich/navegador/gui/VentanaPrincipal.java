@@ -2,6 +2,7 @@ package edu.uagrm.fich.navegador.gui;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import edu.uagrm.fich.navegador.App;
 import edu.uagrm.fich.navegador.utils.Historial;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -14,6 +15,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import static javafx.concurrent.Worker.State.SUCCEEDED;
 
@@ -30,11 +33,13 @@ public class VentanaPrincipal extends Scene {
     private final HBox panelBuscar = new HBox(ESPACIADO, txtBuscador, btnBuscar, btnAtras, btnAdelante, btnHistorial);
     private final WebView contenedorWeb = new WebView();
 
-    private WebEngine manejadorWeb = contenedorWeb.getEngine();
-    private Historial historial = new Historial();
+    private final Stage stage;
+    private final WebEngine manejadorWeb = contenedorWeb.getEngine();
+    private final Historial historial = new Historial();
 
-    public VentanaPrincipal() {
+    public VentanaPrincipal(Stage stage) {
         super(new VBox(ESPACIADO));
+        this.stage = stage;
         this.panel = (VBox) getRoot();
         configurarComponentes();
         configurarAcciones();
@@ -77,8 +82,9 @@ public class VentanaPrincipal extends Scene {
 
     private void configurarAcciones(){
         btnBuscar.setOnAction( _ -> buscar(txtBuscador.getText()));
-        btnAtras.setOnAction(_ -> clickEnAtras());
-        btnAdelante.setOnAction(_ -> clickEnAdelante());
+        btnAtras.setOnAction( _ -> clickEnAtras());
+        btnAdelante.setOnAction( _ -> clickEnAdelante());
+        btnHistorial.setOnAction( _ -> clickVerHistorial());
 
         txtBuscador.setOnKeyPressed(evt -> {
             if (evt.getCode() == KeyCode.ENTER) {
@@ -91,6 +97,17 @@ public class VentanaPrincipal extends Scene {
                 actualizarHistorial(manejadorWeb.getLocation());
             }
         });
+    }
+
+    private void clickVerHistorial() {
+        Stage stageHistorial = new Stage();
+        stageHistorial.initOwner(stage);
+        VentanaHistorial ventanaHistorial = new VentanaHistorial(historial);
+        stageHistorial.initModality(Modality.APPLICATION_MODAL);
+        stageHistorial.setTitle("Historial de Navegación");
+        stageHistorial.getIcons().add(App.ICON);
+        stageHistorial.setScene(ventanaHistorial);
+        stageHistorial.showAndWait();
     }
 
     private void buscar(String consulta) {
