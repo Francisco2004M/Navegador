@@ -7,4 +7,5 @@ module edu.uagrm.fich.navegador {
 
     exports edu.uagrm.fich.navegador;
     exports edu.uagrm.fich.navegador.gui;
+    exports edu.uagrm.fich.navegador.utils;
 }
