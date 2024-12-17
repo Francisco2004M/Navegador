@@ -1,0 +1,65 @@
+# === Maven ===
+target/*
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+dependency-reduced-pom.xml
+release.properties
+*.log
+mvnw
+mvnw.cmd
+.mvn/wrapper/maven-wrapper.jar
+
+# === IntelliJ IDEA ===
+.idea/*
+*.iml
+*.ipr
+*.iws
+out/*
+
+# === Eclipse ===
+.project
+.classpath
+.settings/*
+.metadata/*
+bin/*
+tmp/*
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# === NetBeans ===
+nbproject/private/      # Configuraciones privadas del proyecto
+nbbuild/
+dist/                   # Carpeta de salida de NetBeans
+nbdist/
+*.nbattrs
+
+# === Visual Studio Code ===
+.vscode/                # Configuraciones de VSCode
+*.code-workspace
+
+# === Sistema Operativo ===
+.DS_Store               # macOS archivos del Finder
+Thumbs.db               # Windows archivos del explorador
+ehthumbs.db
+desktop.ini
+
+# === Archivos de compilación Java ===
+*.class                 # Archivos de clases compilados
+*.jar                   # Archivos JAR (por si se generan localmente)
+*.war                   # Archivos WAR
+*.ear                   # Archivos EAR
+*.javadoc/
+
+# === Archivos temporales ===
+*.swp                   # Archivos temporales de Vim
+*.swo
+*.tmp
+*.log
+*.bak
+
+# === Otros archivos comunes ===
+!/.mvn/wrapper/maven-wrapper.jar # Asegúrate de no ignorar el Maven Wrapper JAR
+*.~*                    # Archivos de respaldo
