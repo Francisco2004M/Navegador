@@ -38,4 +38,13 @@ public class Pila implements Serializable {
         cima = -1;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder cad = new StringBuilder("Pila\n[");
+        for (int i = cima; i >= 0; i--) {
+            cad.append(vector[i]).append(",\n");
+        }
+        cad.append("]");
+        return cad.toString();
+    }
 }
