@@ -6,4 +6,5 @@ module edu.uagrm.fich.navegador {
     requires javafx.web;
 
     exports edu.uagrm.fich.navegador;
+    exports edu.uagrm.fich.navegador.gui;
 }
